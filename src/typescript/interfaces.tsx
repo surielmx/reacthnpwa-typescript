@@ -1,11 +1,18 @@
+export interface UserProps {
+    id: string;
+    about?: string;
+    created?: string;
+    created_time?: number;
+    karma?: number;
+}
 export interface NavigationProps {
     themeMode: string;
     isOffLine?: boolean;
 }
 export interface PaginationProps {
     story: string;
-    stories: [];
-    page: string;
+    stories?: [];
+    page?: string | undefined;
     totalPages: number;
 }
 export interface SkeletonProps {
@@ -19,8 +26,9 @@ export interface StoryProps {
     isOffLine: boolean;
     path: string;
     params: {
-        page: string;
-        item: string;
+        page?: string | undefined;
+        item?: string;
+        user?: number | undefined;
     };
     url: string;
 }

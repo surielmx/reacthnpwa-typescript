@@ -1,5 +1,6 @@
 import React, { Fragment, Suspense, lazy } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 
 // import Skeleton from './components/Skeleton';
 // import Progress from './components/Progress/Progress';
@@ -8,7 +9,7 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 const Navigation = lazy(() => import('./components/Navigation'));
 const ItemContainer = lazy(() => import('./views/ItemContainer'));
 const StoryContainer = lazy(() => import('./views/StoryContainer'));
-// const UserContainer = lazy(() => import('./containers/UserContainer'));
+const UserContainer = lazy(() => import('./views/UserContainer'));
 
 // const renderLoader = () => <Skeleton height="38px"></Skeleton>;
 
@@ -39,11 +40,11 @@ function App() {
 
 	return (
 		<Fragment>
-			<Suspense fallback={<h1>Loading...</h1>}>
+			<Suspense fallback={<h2>Loading...</h2>}>
 				<Navigation {...{ themeMode, isOffLine }} />
 			</Suspense>
 			<main className="container">
-				<Suspense fallback={<h1>Loading...</h1>}>
+				<Suspense fallback={<h2>Loading...</h2>}>
 					<Switch>
 						<Route
 							path={[
@@ -64,6 +65,12 @@ function App() {
 							)}
 						/>
 						<Route
+							path="/user/:user?"
+							render={({ match, history }) => (
+								<UserContainer isOffLine={isOffLine} {...match} {...history} />
+							)}
+						/>
+						<Route
 							path="*"
 							render={() => {
 								return <Redirect to="/news/1" />;
@@ -72,6 +79,7 @@ function App() {
 					</Switch>
 				</Suspense>
 			</main>
+			<ToastContainer />
 			{/* <Snackbar showStatus={isOffLine} /> */}
 		</Fragment>
 	);

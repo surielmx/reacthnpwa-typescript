@@ -1,13 +1,13 @@
 import { CSSProperties } from 'react';
 import { SkeletonProps } from '../typescript/interfaces';
 
-const Skeleton = ({
+function Skeleton({
     height = '38px',
     width = 'inherit',
     center = false,
     variant = 'rect',
     className = undefined,
-}: SkeletonProps) => {
+}: SkeletonProps) {
     const initStyle: CSSProperties = {
         display: 'block',
         background: 'var(--skeleton)',

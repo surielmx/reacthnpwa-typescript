@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Skeleton from '../Skeleton';
 import { PaginationProps } from '../../typescript/interfaces';
 
-const Pagination = ({ stories, story, page, totalPages }: PaginationProps) => {
+function Pagination({ story, page, totalPages }: PaginationProps) {
     const paginationStyle: CSSProperties = {
         textAlign: 'center',
         margin: '20px auto',
@@ -18,7 +18,7 @@ const Pagination = ({ stories, story, page, totalPages }: PaginationProps) => {
         padding: '0 10px',
         color: 'var(--title)',
     };
-    const currentPage = parseInt(page, 10);
+    const currentPage = Number(page);
     const prevPage = currentPage !== 1 ? currentPage - 1 : currentPage;
     const nextPage = currentPage !== totalPages ? currentPage + 1 : currentPage;
 

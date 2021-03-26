@@ -1,3 +1,5 @@
+import { toast } from 'react-toastify';
+
 // This optional code is used to register a service worker.
 // register() is not called by default.
 
@@ -36,6 +38,40 @@ export function register(config?: Config) {
 
     window.addEventListener('load', () => {
       const swUrl = `${process.env.PUBLIC_URL}/service-worker.js`;
+      let isAppOnline = navigator.onLine;
+
+			window.addEventListener('online', () => {
+				if (!isAppOnline) {
+					toast.dark('The connectivity is back!', {
+            role: "alert"
+            toastId: 'appOnline',
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: true,
+            progress: undefined,
+          });
+					isAppOnline = true;
+				}
+			});
+			window.addEventListener('offline', () => {
+				toast.dark(
+					'The app is running offline, any changes mades during this time will be synced as soon as the connectivity is back', {
+            role: "alert"
+            toastId: 'appOffline',
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: true,
+            progress: undefined,
+          }
+				);
+				isAppOnline = false;
+			});
 
       if (isLocalhost) {
         // This is running on localhost. Let's check if a service worker still exists or not.
@@ -76,6 +112,16 @@ function registerValidSW(swUrl: string, config?: Config) {
                 'New content is available and will be used when all ' +
                   'tabs for this page are closed. See https://cra.link/PWA.'
               );
+							toast.dark(`Update available! Click to update.`, {
+								position: 'top-right',
+								toastId: 'appUpdateAvailable',
+                role: "alert"
+								onClick: () => {
+									// registration.waiting.postMessage('skipWaiting');
+									window.location.reload();
+								},
+								autoClose: false,
+							});
 
               // Execute callback
               if (config && config.onUpdate) {

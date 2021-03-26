@@ -6,29 +6,15 @@ import { StoryProps, PaginationProps } from '../typescript/interfaces'
 import { validatePage } from '../util/validators';
 import { getStoryPage } from '../api/fetchApi';
 
-const initialStoryData: PaginationProps = {
-	story: '',
-	stories: [],
-	page: '',
-	totalPages: 0,
-}
-
-const StoryContainer = ({ isOffLine, path, params, url }: StoryProps) => {
-	const { page: paramsPage } = params;
+function StoryContainer({ isOffLine, path, params, url }: StoryProps) {
+	const { page } = params;
 	const [isValidPage, setValidPage] = useState<boolean>(true);
-	const [storyData, setStoryData] = useState(initialStoryData);
-
-	async function setStory(story: string, page: string) {
-		const totalPages = getTotalPages[story];
-		const stories = await getStoryPage(story, paramsPage);
-		const storyData = {
-			story,
-			stories,
-			page: paramsPage,
-			totalPages,
-		};
-		setStoryData(storyData);
-	}
+	const [storyData, setStoryData] = useState<PaginationProps>({
+		story: '',
+		stories: [],
+		page: '',
+		totalPages: 0,
+	});
 
 	useEffect(() => {
 		function validateStoryType() {
@@ -37,27 +23,39 @@ const StoryContainer = ({ isOffLine, path, params, url }: StoryProps) => {
 
 				const [, typeStory]: string[] = path.match(/\/([a-z]*)\//) || [];
 				const isValidStory = typeStories.find((story) => story === typeStory);
-				const isValidPage = validatePage(Number(paramsPage));
+				const isValidPage = validatePage(Number(page));
+				console.log(isValidPage)
 
 				if (Boolean(isValidStory) && isValidPage) {
-					setStory(typeStory, paramsPage);
-					return;
+					console.log(typeStory)
+					setStory(typeStory);
 				}
 				setValidPage(Boolean(isValidStory) && isValidPage);
 			}
 		}
 		validateStoryType();
-	}, [isOffLine, paramsPage, path, url]);
+	}, [isOffLine, page, path, url]);
+
+
+	async function setStory(story: string) {
+		const totalPages = getTotalPages[story];
+		const stories = await getStoryPage(story, page);
+		setStoryData({
+			story,
+			stories,
+			page,
+			totalPages,
+		});
+	}
 
 	return (
 		<>
-			{!isValidPage && <h1>Invalid page</h1>}
 			{isValidPage ? (
 				<>
 					<Pagination {...storyData} />
 					<StoryList {...storyData} />
 				</>
-			) : null}
+			) : <h1 style={{ color: 'var(--content)', margin: '15px' }}>Invalid page</h1>}
 		</>
 	);
 };

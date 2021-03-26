@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { PaginationProps } from '../typescript/interfaces';
 import Skeleton from '../components/Skeleton';
 
-const StoryList = ({ stories = [], page = '1' }: PaginationProps) => {
+function StoryList({ stories = [], page = '1' }: PaginationProps) {
     const storyStyle: CSSProperties = {
         marginBottom: 20,
         display: 'flex',
@@ -39,7 +39,7 @@ const StoryList = ({ stories = [], page = '1' }: PaginationProps) => {
                 }}
             >
                 {(stories.length === 0 ? Array.from(new Array(8)) : stories).map((story, index) => {
-                    const currentPage = parseInt(page, 10);
+                    const currentPage = Number(page);
                     const storyNumber =
                         currentPage !== 1 ? currentPage * 30 - 30 + index + 1 : index + 1;
 
@@ -84,7 +84,7 @@ const StoryList = ({ stories = [], page = '1' }: PaginationProps) => {
                                                 to={`/item/${story.id}`}
                                             >
                                                 {story.comments_count} comments
-											</Link>
+                                            </Link>
                                         </div>
                                     </div>
                                 </li>
