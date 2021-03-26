@@ -24,10 +24,8 @@ function StoryContainer({ isOffLine, path, params, url }: StoryProps) {
 				const [, typeStory]: string[] = path.match(/\/([a-z]*)\//) || [];
 				const isValidStory = typeStories.find((story) => story === typeStory);
 				const isValidPage = validatePage(Number(page));
-				console.log(isValidPage)
 
 				if (Boolean(isValidStory) && isValidPage) {
-					console.log(typeStory)
 					setStory(typeStory);
 				}
 				setValidPage(Boolean(isValidStory) && isValidPage);
