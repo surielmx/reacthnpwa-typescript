@@ -43,7 +43,7 @@ export function register(config?: Config) {
 			window.addEventListener('online', () => {
 				if (!isAppOnline) {
 					toast.dark('The connectivity is back!', {
-            role: "alert"
+            role: "alert",
             toastId: 'appOnline',
             position: "top-right",
             autoClose: 5000,
@@ -59,7 +59,7 @@ export function register(config?: Config) {
 			window.addEventListener('offline', () => {
 				toast.dark(
 					'The app is running offline, any changes mades during this time will be synced as soon as the connectivity is back', {
-            role: "alert"
+            role: "alert",
             toastId: 'appOffline',
             position: "top-right",
             autoClose: 5000,
@@ -115,7 +115,7 @@ function registerValidSW(swUrl: string, config?: Config) {
 							toast.dark(`Update available! Click to update.`, {
 								position: 'top-right',
 								toastId: 'appUpdateAvailable',
-                role: "alert"
+                role: "alert",
 								onClick: () => {
 									// registration.waiting.postMessage('skipWaiting');
 									window.location.reload();
