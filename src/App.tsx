@@ -1,8 +1,7 @@
 import React, { Fragment, Suspense, lazy } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
-
-// import Skeleton from './components/Skeleton';
+import Skeleton from './components/Skeleton';
 // import Progress from './components/Progress/Progress';
 // import Snackbar from './components/Snackbar';
 
@@ -40,11 +39,11 @@ function App() {
 
 	return (
 		<Fragment>
-			<Suspense fallback={<h2>Loading...</h2>}>
+			<Suspense fallback={<Skeleton height="38px"></Skeleton>}>
 				<Navigation {...{ themeMode, isOffLine }} />
 			</Suspense>
 			<main className="container">
-				<Suspense fallback={<h2>Loading...</h2>}>
+				<Suspense fallback={<Skeleton height="38px"></Skeleton>}>
 					<Switch>
 						<Route
 							path={[
@@ -52,7 +51,7 @@ function App() {
 								'/newest/:page?',
 								'/show/:page?',
 								'/ask/:page?',
-								'/jobs/:page?'
+								'/jobs/:page?',
 							]}
 							render={({ match, history }) => (
 								<StoryContainer isOffLine={isOffLine} {...match} {...history} />
